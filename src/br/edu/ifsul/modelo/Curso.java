@@ -6,15 +6,20 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,7 +34,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Leandro Grando
  */
 @Entity
-@Table(name = "curso")
+@Table(name = "cursos")
 public class Curso implements Serializable {
     
     @Id
@@ -67,8 +72,20 @@ public class Curso implements Serializable {
     @JoinColumn(name = "instituicao", referencedColumnName = "id", nullable = false)
     @ForeignKey(name = "fk_instituicao_curso")
     private Instituicao instituicao;
+    
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Disciplina> disciplinas = new ArrayList<>();
 
     public Curso() {
+    }
+    
+    public void adicionarDisciplina(Disciplina obj) {
+        obj.setCurso(this);
+        disciplinas.add(obj);
+    }
+    
+    public void removerDisciplina(int index) {
+        disciplinas.remove(index);
     }
 
     public Integer getId() {

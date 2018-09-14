@@ -24,7 +24,7 @@ import org.hibernate.annotations.ForeignKey;
  * @author Leandro Grando
  */
 @Entity
-@Table(name = "nota")
+@Table(name = "notas")
 public class Nota implements Serializable {
     
     @Id
@@ -49,6 +49,12 @@ public class Nota implements Serializable {
     @JoinColumn(name = "aluno", referencedColumnName = "id", nullable = false)
     @ForeignKey(name = "fk_aluno_nota")
     private Aluno aluno;
+    
+    @NotNull(message = "A disciplina deve ser informada")
+    @ManyToOne
+    @JoinColumn(name = "disciplina", referencedColumnName = "id", nullable = false)
+    @ForeignKey(name = "fk_disciplina_nota")
+    private Disciplina disciplina;
 
     public Nota() {
     }
@@ -120,6 +126,14 @@ public class Nota implements Serializable {
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
+    }
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
     }
     
     

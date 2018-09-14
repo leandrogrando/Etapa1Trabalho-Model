@@ -6,7 +6,9 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +17,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -55,6 +61,15 @@ public class Aluno implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "nascimento", nullable = false)
     private Calendar nascimento;
+    
+    @ManyToMany
+    @JoinTable(name = "alunos_disciplina",
+            joinColumns = 
+            @JoinColumn(name = "aluno", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = 
+            @JoinColumn(name = "disciplina", referencedColumnName = "id", nullable = false), 
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"disciplina", "aluno"})})   
+    private List<Disciplina> inscritoDiscplinas = new ArrayList<>();
 
     public Aluno() {
     }
@@ -114,6 +129,14 @@ public class Aluno implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public List<Disciplina> getInscritoDiscplinas() {
+        return inscritoDiscplinas;
+    }
+
+    public void setInscritoDiscplinas(List<Disciplina> inscritoDiscplinas) {
+        this.inscritoDiscplinas = inscritoDiscplinas;
     }
     
     
