@@ -50,7 +50,6 @@ public class Curso implements Serializable {
     private String sigla;
     
     @NotNull(message = "A descrição não pode ser nulo.")
-    @Length(message = "A descrição pode ter mais que {max} caracteres.")
     @NotBlank(message = "A descrição não pode estar em branco.")
     @Column(name = "descricao", nullable = false, columnDefinition = "text")
     private String descricao;
