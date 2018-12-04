@@ -23,7 +23,6 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Leandro Grando
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "professor")
 public class Professor extends Aluno implements Serializable {
     

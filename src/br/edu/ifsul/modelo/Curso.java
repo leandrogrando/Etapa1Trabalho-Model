@@ -76,6 +76,14 @@ public class Curso implements Serializable {
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Disciplina> disciplinas = new ArrayList<>();
 
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
+
     public Curso() {
     }
     

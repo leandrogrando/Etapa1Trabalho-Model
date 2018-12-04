@@ -40,7 +40,7 @@ public class TestePersistirEspecialidade {
         boolean exception = false;
         try {
             Especialidade obj = new Especialidade();
-            obj.setNome("Mestrado");         
+            obj.setNome("Doutorado");         
             
             em.getTransaction().begin();
             em.persist(obj);
